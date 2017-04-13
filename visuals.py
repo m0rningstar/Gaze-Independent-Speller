@@ -10,17 +10,22 @@ from psychopy.event import Mouse
 from psychopy.core import wait
 from random import shuffle
 
-from speller_config import *
+from visuals_config import *
 
 def draw_group(stimuli):
     for stimulus in stimuli:
         stimulus.draw()
 
-def main():
-    groups=GROUPS
+def create_stim_sequence(block1, block2, block3, repeats):
+    seq=[]
+    for i in range(repeats):
+        g=create_groups(BLOCK1, BLOCK2, BLOCK3)
+        seq+=g
+    return seq
     
-    groups.extend(TRIALREPEATS*groups)
-    shuffle(groups)
+def main():
+    groups=create_stim_sequence(BLOCK1, BLOCK2, BLOCK3, TRIALREPEATS)
+    print groups
     
     disp=Window(size=SIZE, monitor=MON, units='deg', color=BACKCOL, screen =1, fullscr=True)
     

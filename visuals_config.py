@@ -5,14 +5,37 @@ Created on Wed Mar 01 14:05:14 2017
 @author: m0rningstar
 """
 import os
+import random
 from psychopy.monitors import Monitor
+
+def get_column(l):
+    bar=[]
+    foo=[l[i] for i in [0, 3, 6]]
+    bar.append(foo)
+    foo=[l[i] for i in [1, 4, 7]]
+    bar.append(foo)
+    foo=[l[i] for i in [2, 5, 8]]
+    bar.append(foo)
+    return bar
+
+def get_row(l):
+    bar=[l[i:i + 3] for i in xrange(0, len(l), 3)]
+    return bar
+
+def create_groups(block1, block2, block3):
+    random.shuffle(block1)
+    random.shuffle(block2)
+    random.shuffle(block3)
+    r=get_row(block1)+get_row(block2)+get_row(block3)
+    c=get_column(block1)+get_column(block2)+get_column(block3)
+    return r+c
 
 DIR = os.getcwd() 
 
-FLASH=0.050 # duration of flash, s
-PAUSE=0.100
-TRIALREPEATS = 2 # cycles of flashes
-SIZE=(1680,1050)# resolution    (1280,720)
+FLASH=0.0625 # duration of flash, s
+PAUSE=0.0625
+TRIALREPEATS = 5 # cycles of flashes
+SIZE=(1536, 864)#(1680,1050)# resolution    (1280,720)
 CENTER=(0,0) # fixmark coordinates, deg
 DISTANCE=75 # distance between subject and screen, cm
 WIDTH= 47.4 # screen width , cm    (31)
@@ -63,13 +86,18 @@ CIRCLES={'J':[C1[0], (DIR+r'\Stimuli\10-0.png'), (DIR+r'\Stimuli\10-1.png'), LET
               'T':[C3[7], (DIR+r'\Stimuli\20-0.png'), (DIR+r'\Stimuli\20-1.png'), LETTERSIZE[2]],
               'L':[C3[8], (DIR+r'\Stimuli\12-0.png'), (DIR+r'\Stimuli\12-1.png'), LETTERSIZE[2]]}
 
-GROUPS = [('A','J','S'), ('B', 'K', 'T'), ('C','L','U'), ('D', 'M', 'V'), ('E', 'N','V'),
-        ('F','O','X'), ('G', 'P', 'V'), ('H', 'Q', 'Z'), ('I', 'R', 'star'),
-        ('A', 'B', 'C'), ('D', 'E', 'F'), ('G', 'H', 'I'), ('J', 'K', 'L'), ('M', 'N', 'O'),
-        ('P', 'Q', 'R'), ('S', 'T', 'U'), ('V','W','X'), ('Y', 'Z', 'star'),
-        ('A', 'D','G'), ('B', 'E','H'), ('G', 'F', 'I'), ('J','M','P'), ('K','N','Q'),
-        ('L', 'O','R'), ('S', 'V','Y'), ('T','W','Z'), ('U','X','star')] # 'RC' stimuli groups
+#GROUPS = [('A','J','S'), ('B', 'K', 'T'), ('C','L','U'), ('D', 'M', 'V'), ('E', 'N','V'),
+#        ('F','O','X'), ('G', 'P', 'V'), ('H', 'Q', 'Z'), ('I', 'R', 'star'),
+#        ('A', 'B', 'C'), ('D', 'E', 'F'), ('G', 'H', 'I'), ('J', 'K', 'L'), ('M', 'N', 'O'),
+#        ('P', 'Q', 'R'), ('S', 'T', 'U'), ('V','W','X'), ('Y', 'Z', 'star'),
+#        ('A', 'D','G'), ('B', 'E','H'), ('G', 'F', 'I'), ('J','M','P'), ('K','N','Q'),
+#        ('L', 'O','R'), ('S', 'V','Y'), ('T','W','Z'), ('U','X','star')] # 'RC' stimuli groups
 
+BLOCK1=['D', 'K', 'O', 'Y', 'N', 'L', 'star', 'H', 'P']
+BLOCK2=['E', 'F', 'X', 'A', 'M', 'J', 'I', 'W', 'U']
+BLOCK3=['S', 'B', 'Z', 'T', 'R', 'V', 'C', 'Q', 'G']
+
+#GROUPS=create_groups(BLOCK1, BLOCK2, BLOCK3)
 
 ###############################################################################
 ####Testing block
